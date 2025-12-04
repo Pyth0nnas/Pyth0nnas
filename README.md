@@ -11,7 +11,7 @@ My name is Thomas and im trying to get better at programming on python in order 
 - Will be trying to spend about 20 hours coding weekly and make something like progress journal where i will be caturing my weekly improvements more detally.
 ## Here i will add some links
 [![Codewars](https://img.shields.io/badge/Codewars-B1361E?style=for-the-badge&logo=codewars&logoColor=white)](https://www.codewars.com/users/Tommyjunbas)
-
+![Codewars Stats](https://github.r2v.ch/codewars?user=Tommyjunbas&stroke=%23BB432C&stroke-width=4)
 <!--
 
 **Pyth0nnas/Pyth0nnas** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
