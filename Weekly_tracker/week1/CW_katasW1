@@ -1,0 +1,30 @@
+def rps(p1, p2):   #8kyu challenge,"rock, paper, scissors"
+    if p1 == p2:
+        return "Draw!"
+    elif p1 == "scissors" and p2 == "paper" or p1 == "paper" and p2 == "rock" or p1 == "rock" and p2 == "scissors":    #all the scripts of player 1 wictory
+        return "Player 1 won!"
+    else:    #only player 2 wictory scripts left
+        return "Player 2 won!" 
+    
+def scramble(strng, array):   #7kyu challenge,"string scramble"
+    correct = ""
+    n = 0
+    for element in array:
+        correct += strng[array.index(min(array) + n)]   #takes the index of the minimal element in array, every next loop min+1
+        n += 1
+    return correct
+
+def high_and_low(numbers):   #7kyu challenge, "highest and lowest"
+    strlst = numbers.split()
+    for i in range(len(strlst)):
+        strlst[i] = int(strlst[i])   #turning each element to integer
+    return f"{str(max(strlst))} {str(min(strlst))}"   #turning needed elements back to strings while returning them
+
+def odd_ball(arr):   #7kyu challenge, "odds index"
+    for i in range(len(arr)):
+        if arr[i] == "odd":
+            position = i   #saves the position of the "odd" as varaible "position"
+    for i in range(len(arr)):
+        if arr[i] == position:
+            return True
+    return False
