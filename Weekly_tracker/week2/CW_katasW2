@@ -31,3 +31,15 @@ def pattern(n: int) -> str:   #7kyu challenge "complete the pattern #7 - cyclica
         if start != n:
             sol += "\n"
     return sol
+def square_digits(num):   #7kyu challenge "square every digit"
+    return int("".join(str(int(element)*int(element)) for element in str(num)))
+
+def xo(s):   #7kyu challenge "exes and ohs"
+    cnto = 0
+    cntx = 0
+    for element in s:
+        if element == "o" or element == "O":
+            cnto += 1
+        elif element == "x" or element == "X":
+            cntx += 1
+    return cnto == cntx
