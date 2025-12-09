@@ -28,3 +28,4 @@ def odd_ball(arr):   #7kyu challenge, "odds index"
         if arr[i] == position:
             return True
     return False
+
