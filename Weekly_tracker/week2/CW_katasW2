@@ -43,3 +43,30 @@ def xo(s):   #7kyu challenge "exes and ohs"
         elif element == "x" or element == "X":
             cntx += 1
     return cnto == cntx
+
+def spin_words(sentence):   #6 kyu challenge "stop gninnips my sdrow!"
+    sen = sentence.split(" ")
+    for i in range(len(sen)):
+        if len(sen[i]) >= 5:
+            sen[i] = sen[i][::-1]
+    return " ".join(sen)
+
+def digital_root(n):   #6kyu challenge "sum of digits / digital root"
+    bibka = sum([int(digit) for digit in str(n)])
+    if bibka >= 10:
+        return digital_root(bibka)
+    else:
+        return bibka
+
+def letters_to_numbers(s):   #6kyu challenge "sentence calculator"
+    score = 0
+    uneffective1 = "@abcdefghijklmnopqrstuvwxyz"
+    uneffective2 = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for element in s:
+        if element in uneffective1:
+            score += uneffective1.index(element)
+        elif element in uneffective2:
+            score += uneffective2.index(element)*2
+        elif element.isdigit():
+            score += int(element)
+    return score
