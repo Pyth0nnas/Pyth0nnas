@@ -70,3 +70,15 @@ def letters_to_numbers(s):   #6kyu challenge "sentence calculator"
         elif element.isdigit():
             score += int(element)
     return score
+
+def vowel_recognition(s):   #6kyu challenge "vowel recognition"
+    vowels = set("aeiouAEIOU")
+    n = len(s)
+    total = 0
+    
+    for i, char in enumerate(s):
+        if char in vowels:
+            total += (i + 1) * (n - i)
+    
+    return total
+
