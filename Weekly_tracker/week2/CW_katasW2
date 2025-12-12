@@ -82,3 +82,22 @@ def vowel_recognition(s):   #6kyu challenge "vowel recognition"
     
     return total
 
+def count_digits(num, rounds):   #6kyu challenge "counting digits"
+    current = str(num)
+    order = []
+    seen = set()
+    for digit in current:
+        if digit not in seen:
+            seen.add(digit)
+            order.append(digit)
+    counts = {}
+    for digit in current:
+        counts[digit] = counts.get(digit, 0) + 1
+    result_parts = []
+    for i, digit in enumerate(order):
+        result_parts.append(str(counts[digit]))  
+        result_parts[i] += order[i]  
+    if rounds - 1 == 0:
+        return [int(element) for element in result_parts]
+    new_num = "".join(result_parts)
+    return count_digits(int(new_num), rounds - 1)
