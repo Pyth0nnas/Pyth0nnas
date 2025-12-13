@@ -127,3 +127,40 @@ def palindrome(text):
     for char in unwanted:
         text = text.replace(char, '')
     return text.lower() == text[::-1].lower()
+
+def split_integer(num, parts):   #6kyu challenge "almost even"
+    result = []
+    if num % parts == 0:
+        for i in range(0, parts):
+            result.append(num//parts)
+    elif parts > num:
+        while parts != 0:
+            if num != 0:
+                result.append(1)
+                num -= 1
+            else:
+                result.append(0)
+            parts -= 1
+    else:
+        for i in range(0, parts):
+            result.append(num//parts)
+        n = -1
+        nn = num % parts
+        while nn != 0:
+            result[n] += 1
+            nn -= 1
+            n -=1
+    return result
+
+def delete_nth(order,max_e):   #6kyu challenge "delete occurrences of an element if it occurs more than n times"
+    allcounts = {}
+    sol = []
+    for element in order:
+        if element not in allcounts:
+            allcounts[element] = 0
+    for element in order:
+        if allcounts[element] != max_e:
+            sol.append(element)
+            allcounts[element] += 1
+    return sol
+    
