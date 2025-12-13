@@ -101,3 +101,29 @@ def count_digits(num, rounds):   #6kyu challenge "counting digits"
         return [int(element) for element in result_parts]
     new_num = "".join(result_parts)
     return count_digits(int(new_num), rounds - 1)
+
+def find_outlier(integers):  #6kyu challenge "find the parity outlier"
+    cntodd = 0
+    cnteven = 0
+    for i in range(len(integers)):
+        if integers[i] % 2 == 0:
+            cnteven += 1
+        else:
+            cntodd += 1
+    if cnteven > cntodd:
+        for i in range(len(integers)):
+            if integers[i] % 2 == 1:
+                return integers[i]
+    else:
+        for i in range(len(integers)):
+            if integers[i] % 2 == 0:
+                return integers[i]
+            
+def count_bits(n):   #6kyu challenge "bit counting"
+    return str(format(n, "b")).count("1")
+
+def palindrome(text):
+    unwanted = " (){/\:.'\"'*-+&}^%$#@!?=><;,_"
+    for char in unwanted:
+        text = text.replace(char, '')
+    return text.lower() == text[::-1].lower()
