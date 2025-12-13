@@ -8,7 +8,7 @@ def bubblesort_once(l):   #7kyu challenge "bubblesort once"
 def is_sorted_and_how(arr):   #7kyu challenge "sorted? yes? no? how?"
     if arr == sorted(arr):
         return "yes, ascending"
-    elif arr == sorted(arr, reverse = True):
+    elif arr == sorted(arr, reverse = True): #sorting the array in reverse
         return "yes, descending"
     else:
         return "no"
@@ -20,24 +20,24 @@ def pattern(n: int) -> str:   #7kyu challenge "complete the pattern #7 - cyclica
     
     sol = ""
     for start in range(1, n + 1):
-        m = start
+        m = start   #m will be +1 every cycle so every new line will start with the next char in n
         count = 0
         while count < n:
-            if m > n:
+            if m > n:   #resets ms value when it completes all the values from 1 to n
                 m = 1  
             sol += str(m)
             m += 1
             count += 1
-        if start != n:
+        if start != n:   #adds new line only if its now the last cycle
             sol += "\n"
     return sol
 def square_digits(num):   #7kyu challenge "square every digit"
-    return int("".join(str(int(element)*int(element)) for element in str(num)))
+    return int("".join(str(int(element)*int(element)) for element in str(num))) #sqares every digit in num and returns it as list of integers
 
 def xo(s):   #7kyu challenge "exes and ohs"
     cnto = 0
     cntx = 0
-    for element in s:
+    for element in s:   #simply counts all needed chars
         if element == "o" or element == "O":
             cnto += 1
         elif element == "x" or element == "X":
@@ -47,12 +47,12 @@ def xo(s):   #7kyu challenge "exes and ohs"
 def spin_words(sentence):   #6 kyu challenge "stop gninnips my sdrow!"
     sen = sentence.split(" ")
     for i in range(len(sen)):
-        if len(sen[i]) >= 5:
+        if len(sen[i]) >= 5:   #reverses the word if it has more than 5 chars
             sen[i] = sen[i][::-1]
     return " ".join(sen)
 
 def digital_root(n):   #6kyu challenge "sum of digits / digital root"
-    bibka = sum([int(digit) for digit in str(n)])
+    bibka = sum([int(digit) for digit in str(n)])   #summarises every char in n
     if bibka >= 10:
         return digital_root(bibka)
     else:
@@ -63,7 +63,7 @@ def letters_to_numbers(s):   #6kyu challenge "sentence calculator"
     uneffective1 = "@abcdefghijklmnopqrstuvwxyz"
     uneffective2 = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     for element in s:
-        if element in uneffective1:
+        if element in uneffective1:   #adds values of every char based on their indexes
             score += uneffective1.index(element)
         elif element in uneffective2:
             score += uneffective2.index(element)*2
@@ -78,7 +78,7 @@ def vowel_recognition(s):   #6kyu challenge "vowel recognition"
     
     for i, char in enumerate(s):
         if char in vowels:
-            total += (i + 1) * (n - i)
+            total += (i + 1) * (n - i)   #formula for the number of appearances of each vowel in every possible substring
     
     return total
 
@@ -86,12 +86,12 @@ def count_digits(num, rounds):   #6kyu challenge "counting digits"
     current = str(num)
     order = []
     seen = set()
-    for digit in current:
+    for digit in current:   #finding every unique digit in current
         if digit not in seen:
             seen.add(digit)
             order.append(digit)
     counts = {}
-    for digit in current:
+    for digit in current:   #counting amount of appearances of every digit
         counts[digit] = counts.get(digit, 0) + 1
     result_parts = []
     for i, digit in enumerate(order):
@@ -100,7 +100,7 @@ def count_digits(num, rounds):   #6kyu challenge "counting digits"
     if rounds - 1 == 0:
         return [int(element) for element in result_parts]
     new_num = "".join(result_parts)
-    return count_digits(int(new_num), rounds - 1)
+    return count_digits(int(new_num), rounds - 1)   #running the function again in recursion until rounds - 1== 0 true
 
 def find_outlier(integers):  #6kyu challenge "find the parity outlier"
     cntodd = 0
@@ -110,7 +110,7 @@ def find_outlier(integers):  #6kyu challenge "find the parity outlier"
             cnteven += 1
         else:
             cntodd += 1
-    if cnteven > cntodd:
+    if cnteven > cntodd:   #if cnteven > cntodd return the only odd and other way round
         for i in range(len(integers)):
             if integers[i] % 2 == 1:
                 return integers[i]
@@ -125,7 +125,7 @@ def count_bits(n):   #6kyu challenge "bit counting"
 def palindrome(text):
     unwanted = " (){/\:.'\"'*-+&}^%$#@!?=><;,_"
     for char in unwanted:
-        text = text.replace(char, '')
+        text = text.replace(char, '')   #replacing all unwanted chars with nothing
     return text.lower() == text[::-1].lower()
 
 def split_integer(num, parts):   #6kyu challenge "almost even"
@@ -135,7 +135,7 @@ def split_integer(num, parts):   #6kyu challenge "almost even"
             result.append(num//parts)
     elif parts > num:
         while parts != 0:
-            if num != 0:
+            if num != 0:   #when num is zero adds 0s to result until parts == 0 true
                 result.append(1)
                 num -= 1
             else:
@@ -146,7 +146,7 @@ def split_integer(num, parts):   #6kyu challenge "almost even"
             result.append(num//parts)
         n = -1
         nn = num % parts
-        while nn != 0:
+        while nn != 0:  #add 1 to every element in reverse until there is no modulo
             result[n] += 1
             nn -= 1
             n -=1
@@ -155,11 +155,11 @@ def split_integer(num, parts):   #6kyu challenge "almost even"
 def delete_nth(order,max_e):   #6kyu challenge "delete occurrences of an element if it occurs more than n times"
     allcounts = {}
     sol = []
-    for element in order:
+    for element in order:   #adds every element to dictionary so it will be easy to count their occurances
         if element not in allcounts:
             allcounts[element] = 0
     for element in order:
-        if allcounts[element] != max_e:
+        if allcounts[element] != max_e:   #adds every element until number of their occurances gets to the limit
             sol.append(element)
             allcounts[element] += 1
     return sol
