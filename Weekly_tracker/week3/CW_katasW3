@@ -15,3 +15,10 @@ def find_it(seq):   #6kyu challenge "find the odd int"
     for elem in seq:
         if apip[elem] % 2 == 1:
             return elem
+        
+def array_diff(a, b):   #6kyu challenge "array.diff"
+    return [x for x in a if x not in b]
+
+def create_phone_number(n):   #6kyu challenge "create phone number"
+    g = "".join(map(str, n))
+    return f"({g[:3]}) {g[3:6]}-{g[6:10]}"
