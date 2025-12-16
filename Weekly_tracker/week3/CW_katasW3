@@ -22,3 +22,31 @@ def array_diff(a, b):   #6kyu challenge "array.diff"
 def create_phone_number(n):   #6kyu challenge "create phone number"
     g = "".join(map(str, n))
     return f"({g[:3]}) {g[3:6]}-{g[6:10]}"
+
+def duplicate_encode(word):   #6kyu challenge "duplicate encoder"
+    result = ""
+    wor = word.lower()
+    for elem in wor:
+        if wor.count(elem) > 1:
+            result += ")"
+        else:
+            result += "("
+    return result
+
+def alphabet_position(text):   #6kyu challenge "replace with alphabet position"
+    res = []
+    cringe = "abcdefghijklmnopqrstuvwxyz"
+    for elem in text.lower():
+        if elem.isalpha():
+            res.append(cringe.index(elem)+1)
+    return " ".join(map(str, res))
+
+def is_pangram(st):   #6kyu challenge "detect pangram"
+    atoz = "abcdefghijklmnopqrstuvwxyz"
+    for element in st.lower():
+        if element in atoz:
+            atoz = atoz.replace(element, "")
+    if atoz:
+        return False
+    else:
+        return True
