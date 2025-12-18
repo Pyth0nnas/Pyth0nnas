@@ -50,3 +50,48 @@ def is_pangram(st):   #6kyu challenge "detect pangram"
         return False
     else:
         return True
+
+def service(score):   #6kyu challenge "pingpong service problem"
+    bib = score.split(":")
+    sum = 0
+    for elem in map(int, bib):
+        sum += elem
+    if sum >= 40:
+        if (sum//2)%2 == 0:
+            return "first"
+        else:
+            return "second"
+    elif sum == 0:
+        return "first"
+    else:
+        if (sum//5)%2 == 0:
+            return "first"
+        else:
+            return "second"
+        
+def tower_builder(n_floors):   #6kyu challenge "build tower"
+    return [("*" * (2*i + 1)).center(2*n_floors - 1) for i in range(n_floors)]
+
+def narcissistic( value ):   #6kyu challenge "does my number look big in this?"
+    tot = 0
+    cntr = 0
+    for element in str(value):
+        cntr += 1
+    for element in str(value):
+        tot += int(element)**cntr
+    return tot == value
+
+def solution(s):   #6kyu challenge "split strings"
+    bib = list(s)
+    doublebib = []
+    if len(s)%2 == 0:
+        for i in range(0, len(bib), 2):
+            doublebib.append(bib[i] + bib[i+1])
+        return doublebib
+    else:
+        for i in range(0, len(bib), 2):
+            if i+1 == len(bib):
+                doublebib.append(bib[i] + "_")
+            else:
+                doublebib.append(bib[i] + bib[i+1])
+        return doublebib
