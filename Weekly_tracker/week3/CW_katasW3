@@ -4,30 +4,30 @@ def solution(number):   #6kyu challenge "multiples of 3 or 5"
         return 0
     while number != 0:
         number -= 1
-        if number % 5 == 0 or number % 3 == 0:
+        if number % 5 == 0 or number % 3 == 0:   #adding the number to total if it meets the conditions
             totsum += number
     return totsum
   
 def find_it(seq):   #6kyu challenge "find the odd int"
     apip = {}
     for i in range(len(seq)):
-        apip[seq[i]] = apip.get(seq[i], 0) + 1
+        apip[seq[i]] = apip.get(seq[i], 0) + 1   #enters the amount of appearances of a num to dict
     for elem in seq:
-        if apip[elem] % 2 == 1:
+        if apip[elem] % 2 == 1:   #checks the condition
             return elem
         
 def array_diff(a, b):   #6kyu challenge "array.diff"
     return [x for x in a if x not in b]
 
 def create_phone_number(n):   #6kyu challenge "create phone number"
-    g = "".join(map(str, n))
+    g = "".join(map(str, n))   #turns a list of integers to one string
     return f"({g[:3]}) {g[3:6]}-{g[6:10]}"
 
 def duplicate_encode(word):   #6kyu challenge "duplicate encoder"
     result = ""
     wor = word.lower()
     for elem in wor:
-        if wor.count(elem) > 1:
+        if wor.count(elem) > 1:   #adding a character to result depending on the amount of appearances in wor
             result += ")"
         else:
             result += "("
@@ -38,15 +38,15 @@ def alphabet_position(text):   #6kyu challenge "replace with alphabet position"
     cringe = "abcdefghijklmnopqrstuvwxyz"
     for elem in text.lower():
         if elem.isalpha():
-            res.append(cringe.index(elem)+1)
-    return " ".join(map(str, res))
+            res.append(cringe.index(elem)+1)   #adds a numbers which is cringes index to a list
+    return " ".join(map(str, res))   #turning a list of integes to one string
 
 def is_pangram(st):   #6kyu challenge "detect pangram"
     atoz = "abcdefghijklmnopqrstuvwxyz"
     for element in st.lower():
         if element in atoz:
-            atoz = atoz.replace(element, "")
-    if atoz:
+            atoz = atoz.replace(element, "")   #deleting an element in atoz if it appears in st
+    if atoz: 
         return False
     else:
         return True
@@ -54,14 +54,14 @@ def is_pangram(st):   #6kyu challenge "detect pangram"
 def service(score):   #6kyu challenge "pingpong service problem"
     bib = score.split(":")
     sum = 0
-    for elem in map(int, bib):
+    for elem in map(int, bib):   #summarises each player score
         sum += elem
-    if sum >= 40:
+    if sum >= 40:   #if sum >= 40 condition is different
         if (sum//2)%2 == 0:
             return "first"
         else:
             return "second"
-    elif sum == 0:
+    elif sum == 0:   #edge case
         return "first"
     else:
         if (sum//5)%2 == 0:
@@ -78,7 +78,7 @@ def narcissistic( value ):   #6kyu challenge "does my number look big in this?"
     for element in str(value):
         cntr += 1
     for element in str(value):
-        tot += int(element)**cntr
+        tot += int(element)**cntr   #summarises each element**number of elements
     return tot == value
 
 def solution(s):   #6kyu challenge "split strings"
@@ -86,9 +86,9 @@ def solution(s):   #6kyu challenge "split strings"
     doublebib = []
     if len(s)%2 == 0:
         for i in range(0, len(bib), 2):
-            doublebib.append(bib[i] + bib[i+1])
+            doublebib.append(bib[i] + bib[i+1])   #in each element of dublebib will be two neighbor numbers of list(s)
         return doublebib
-    else:
+    else:   #adds "_" to the last element if s has odd number of digits
         for i in range(0, len(bib), 2):
             if i+1 == len(bib):
                 doublebib.append(bib[i] + "_")
