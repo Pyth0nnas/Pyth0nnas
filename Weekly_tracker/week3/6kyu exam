@@ -1,0 +1,163 @@
+"""
+These 6kyu challenges were created by AI!
+
+PROBLEM 1: "Smart String Compression"
+Write a function that compresses a string according to the rules:
+- If a character repeats 3+ times consecutively, replace with [character][count]
+- Otherwise, leave as is
+
+Examples:
+compress("aaabbc") → "a3bbc"
+compress("abc") → "abc"
+compress("aaaabbbcccc") → "a4b3c4"
+compress("a") → "a"
+compress("") → ""
+"""
+def compress(s):
+    if len(s) < 3:   #if len < 3 no changes needed
+        return s
+    res = ""
+    counter = 1
+    for i in range(len(s)-1):
+        if s[i] == s[i+1]:
+            counter += 1
+            if i == len(s)-2:   #checks if s[i+1] is the last element in s
+                if counter >= 3:
+                    res += s[i]
+                    res += str(counter)
+                else:
+                    res += s[i]*counter
+        else:   #if the next element is not the same as current
+            if counter >= 3:   #checks if the element appeared 3 or more times
+                res += s[i]
+                res += str(counter)
+            else:
+                res += s[i]*counter
+            counter = 1
+            if i == len(s)-2:   #checks if s[i+1] is the last element in s
+                res += s[i+1]
+    return res
+
+"""
+PROBLEM 2: "Matrix Diagonal Sum"
+Write a function that returns the sum of elements on both
+the main and anti-diagonals of a square matrix 
+(without double-counting the center).
+
+Examples:
+matrix = [[1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9]]
+diagonal_sum(matrix) → 25
+# 1+5+9 (main) + 3+5+7 (anti) - 5 (center) = 25
+
+matrix = [[1, 2],
+          [3, 4]]
+diagonal_sum(matrix) → 10
+# 1+4 (main) + 2+3 (anti) = 10
+"""
+def diagonal_sum(matrix):
+    total = 0
+    i = 0
+    for row in range(len(matrix)):
+        total += matrix[row][i]   #here row has to be always equeal i
+        i += 1
+    i = 0
+    for row in range(len(matrix)):
+        total += matrix[-(row+1)][i]   #anti diagonal starts from the last row
+        i += 1
+    if len(matrix) % 2 == 1:   #if the matrix has odd length the center element will be counted twice
+        total -= matrix[len(matrix)//2][len(matrix)//2]
+    return total
+
+"""
+PROBLEM 3: "Nested Dictionary Flatten"
+Write a function that flattens a nested dictionary,
+creating keys with dots for nesting.
+
+Examples:
+flatten({"a": 1, "b": {"c": 2, "d": {"e": 3}}})
+→ {"a": 1, "b.c": 2, "b.d.e": 3}
+
+flatten({"user": {"name": "John", "age": 30}})
+→ {"user.name": "John", "user.age": 30}
+
+flatten({})
+→ {}
+"""
+def flatten(d, parent_key='', sep='.'):   #this task was solved with assistance of AI due to its difficulty(unlike other tasks this one was rated as 5kyu)
+    result = {}
+    for key, value in d.items():
+        new_key = f"{parent_key}{sep}{key}" if parent_key else key
+        if isinstance(value, dict):
+            result.update(flatten(value, new_key, sep))
+        else:
+            result[new_key] = value
+    return result
+
+"""
+PROBLEM 4: "Custom Number Validator"
+Write a function that validates a number against these rules:
+1. Must be positive
+2. Sum of digits must be a prime number
+3. Must contain at least one even and one odd digit
+
+Examples:
+validate(123) → False (1+2+3=6 not prime)
+validate(236) → True (2+3+6=11 prime, has even(2,6) and odd(3))
+validate(111) → False (no even digits)
+validate(-5) → False (negative)
+validate(22) → False (no odd digits)
+"""
+def validate(num):
+    if len(str(num)) > 1 and num > 0:
+        tot = sum([int(elem) for elem in str(num)])
+        halb = tot//2
+        if halb == 0:   #works on edge case where sum of digits in num is 1
+            return False
+        while tot%halb != 0:  #checks if sum is a prime number
+            halb -= 1
+        if halb == 1:
+            oddcnt = 0
+            evencnt = 0
+            for elem in str(num):   #counts odd and even digits in num
+                if int(elem)%2 == 0:
+                    evencnt += 1
+                else:
+                    oddcnt += 1
+            if evencnt != 0 and oddcnt != 0:  #there has to be min 1 digit of each category
+                return True
+    return False
+
+"""
+PROBLEM 5: "Pattern Matcher"
+Write a function that checks if a string matches a pattern.
+Pattern contains only 'A' and 'B' letters:
+- 'A' means the corresponding character in string must be a vowel (aeiou)
+- 'B' means the corresponding character must be a consonant letter (not vowel, not digit)
+
+NOTE: We check characters at the SAME position!
+String must not be shorter than pattern.
+
+Examples:
+match_pattern("apple", "A") → True (a is vowel)
+match_pattern("cat", "B") → True (c is consonant letter)
+match_pattern("123", "A") → False (1 is not vowel)
+match_pattern("open", "AB") → True (o vowel, p consonant)
+match_pattern("big", "AB") → False (b consonant ✓, but i vowel, needs consonant)
+match_pattern("test", "C") → False (invalid pattern character)
+match_pattern("", "A") → False (string too short)
+"""
+def match_pattern(s, pattern):
+    if len(pattern) > len(s):
+        return False
+    for i in range(len(s)):
+        if pattern[i] == "A":
+            if s[i] not in "aeiou":   #element with the same index as "A" must be in "aeiou"
+                return False
+        else:
+            if s[i] not in "bcdfghjklmnpqrstvwxyz":   #element with the same index as "B" must be in "bcdfghjklmnpqrstvwxyz"
+                return False
+        if i+1 == len(pattern):   #ends iterations if all elements in patters were taken into account
+            break
+    return True
