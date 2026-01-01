@@ -1,3 +1,117 @@
+"""
+Class Spanner can be used for array/list processing according to the given
+condition then returning a tuple with two arrays/lists, also returning data
+about input and amount of method calls and reseting this data if necessary.
+"""
 class Spanner:
     def __init__(self):
-        pass
+        self.spancount = 0
+        self.totlen = 0
+        self.max_len = 0
+    def span(self, lst, predicate):
+        totlen += len(lst)
+        before = []
+        after = []
+        counter = 0
+        while counter < len(lst) and predicate(lst[counter]):
+            before.append(lst[counter])
+            counter += 1
+        if counter < len(lst):
+            after = lst[counter:]
+        spancount += 1
+        if self.max_len < len(lst):
+            self.max_len = len(lst)
+        return (before, after)
+    def span_strings(self, string, condition):
+        totlen += len(string)
+        before = ""
+        after = ""
+        counter = 0
+        while counter < len(string) and condition(string[counter]):
+            before += string[counter]
+            counter += 1
+        if counter < len(string):
+            after += string[counter:]
+        spancount += 1
+        if self.max_len < len(string):
+            self.max_len = len(string)
+        return (before, after)
+    def reset_stats(self):
+        self.spancount = 0
+        self.totlen = 0
+        self.max_len = 0
+        return f"stats has been resetted"
+    def get_stats(self):
+        return f"span was called out {self.spancount} times with an average list&string length of {self.totlen/self.spancount} with maximum list length of {self.max_len}"
+    def __str__(self):
+        return self.get_stats()
+    def __repr__(self):
+        return f"spancounts = {self.spancount}, avg arr&str length = {self.totlen/self.spancount}, max len = {self.max_len}"
+    
+
+class Matrix:
+    def __init__(self, data):
+        examlen = len(data[0])
+        for elem in data:
+            if not isinstance(elem,list):
+                raise TypeError("matrix has invalid element")
+            if examlen != len(elem):
+                raise IndexError("element has invalid length")
+        self.data = data
+    def transpose(self):
+        transposed = [[]]
+        helper = []
+        for i in range(len(self.data)):
+            for j in range(len(self.data[0])):
+                helper.append(self.data[j][i])
+            transposed.append(helper)
+            helper.clear()
+        return transposed
+    def get(self, row, col):
+        if len(self.data)-1 < col or len(self.data[0])-1 < row:
+            raise ValueError("out of matrix range")
+        return f"element in the chosen index is {self.data[row][col]}"
+    def set(self, row, col, value):
+        if len(self.data)-1 < col or len(self.data[0])-1 < row:
+            raise ValueError("out of matrix range")
+        self.data[row][col] = value
+        return f"chosen value has been setted in the chosen indexes"
+    def rows(self):
+        return len(self.data)
+    def cols(self):
+        return len(self.data[0])
+    def is_square(self):
+        return len(self.data) == len(self.data[0])
+    def trace(self):
+        if not self.is_square():
+            raise ValueError("Trace only for square matrices")
+        diagsum = 0
+        for i in range(len(self.data)):
+            diagsum += self.data[i][i]
+        return f"matrix trace equals {diagsum}"
+    def __len__(self):
+        return len(self.data)
+    def __getitem__(self, index):
+        return self.data[index]
+    def __setitem__(self, index, value):
+        if not isinstance(value, list):
+            raise TypeError("value must be list")
+        if len(value) != len(self.data[0]):
+            raise ValueError("invalid value length")
+        self.data[index] = value
+    def __eq__(self, other):
+        return self.data == other
+    def __add__(self, other):
+        if len(self.data) != len(other) or len(self.data[0] != len(other[0])):
+            raise ValueError("matrixes have different parameters")
+        summarized = [[]]
+        for i in range(len(other)):
+            for j in range(len(other[0])):
+                summarized[i][j] = self.data[i][j]+other[i][j]
+        return summarized
+    def __repr__(self):
+        return f"self.data = {self.data}"
+    def __str__(self):
+        return f"matrix {self.data} has {self.rows} rows and {self.cols} coloumns"
+
+
