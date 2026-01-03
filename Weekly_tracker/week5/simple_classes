@@ -48,7 +48,10 @@ class Spanner:
     def __repr__(self):
         return f"spancounts = {self.spancount}, avg arr&str length = {self.totlen/self.spancount}, max len = {self.max_len}"
     
-
+"""
+A comprehensive matrix manipulation class implementing linear 
+algebra operations in Python.
+"""
 class Matrix:
     def __init__(self, data):
         examlen = len(data[0])
@@ -59,13 +62,12 @@ class Matrix:
                 raise IndexError("element has invalid length")
         self.data = data
     def transpose(self):
-        transposed = [[]]
-        helper = []
+        transposed = []
         for i in range(len(self.data)):
+            helper = []
             for j in range(len(self.data[0])):
                 helper.append(self.data[j][i])
             transposed.append(helper)
-            helper.clear()
         return transposed
     def get(self, row, col):
         if len(self.data)-1 < col or len(self.data[0])-1 < row:
@@ -104,14 +106,125 @@ class Matrix:
     def __add__(self, other):
         if len(self.data) != len(other) or len(self.data[0] != len(other[0])):
             raise ValueError("matrixes have different parameters")
-        summarized = [[]]
+        summarized = []
         for i in range(len(other)):
+            helper = []
             for j in range(len(other[0])):
-                summarized[i][j] = self.data[i][j]+other[i][j]
+                helper.append(self.data[i][j]+other[i][j])
+            summarized.append(helper)
         return summarized
     def __repr__(self):
         return f"self.data = {self.data}"
     def __str__(self):
         return f"matrix {self.data} has {self.rows} rows and {self.cols} coloumns"
-
-
+    
+"""
+A classification system for membership 
+categorization based on age and handicap scores.
+"""
+class MembershipCategorizer:
+    def __init__(self, data):
+        self.data = data
+        self.finaldata = []
+    def categorize(self):
+        if self.finaldata: 
+            return self.finaldata.copy()
+        for elem in self.data:
+            if not isinstance(elem[0], int) or not isinstance(elem[1], int):
+                raise TypeError("incorrect data type")
+            if elem[0] > 55 and elem[1] > 7:
+                self.finaldata.append("Senior")
+            else:
+                self.finaldata.append("Open")
+        return self.finaldata
+    def __str__(self):
+        if not self.finaldata:
+            return f"your data {self.data} hasnt been categorized yet"
+        return f"according to every members data in {self.data} their categories are {self.finaldata}"
+    def __repr__(self):
+        if not self.finaldata:
+            return f"method categorize hasnt been called yet"
+        return f"input = ({self.data}, result = ({self.finaldata}))"
+    
+"""
+A fully-featured e-commerce shopping cart 
+implementation with simple inventory management.
+"""
+class ShoppingCart:
+    def __init__(self):
+        self.cart = {}
+    def add_item(self, item_name, price, quantity=1):
+        if not isinstance(item_name, str) or not isinstance(price, (int, float)) or not isinstance(quantity, int):
+            raise TypeError("wrong data type")
+        if price <= 0 or quantity <= 0:
+            raise ValueError("wrong data value")
+        if item_name in self.cart:
+            self.cart[item_name]["quantity"] += quantity
+        else:
+            self.cart[item_name] = {"price": price, "quantity": quantity}
+    def remove_item(self, item_name, quantity=1):
+        if not isinstance(item_name, str) or not isinstance(quantity, int):
+            raise TypeError("wrong data type")
+        if item_name not in self.cart:
+            raise KeyError(f"Item '{item_name}' not in cart")
+        else:
+            if quantity >= self.cart[item_name]["quantity"]:
+                del self.cart[item_name]
+                return True
+            else:
+                self.cart[item_name]["quantity"] -= quantity
+                return False
+    def update_quantity(self, item_name, new_quantity):
+        if not isinstance(item_name, str) or not isinstance(new_quantity, int):
+            raise TypeError("wrong data type")
+        if item_name not in self.cart or new_quantity <= 0:
+            raise ValueError("no such item or quantity <= 0")
+        self.cart[item_name]["quantity"] = new_quantity
+    def clear_cart(self):
+        if self.cart:
+            self.cart.clear()
+    def get_item_count(self):
+        count = 0
+        for item in self.cart.values():
+            count += item["quantity"]
+        if count:
+            return count
+        else:
+            return f"no items in the cart"
+    def get_unique_items_count(self):
+        if len(self.cart):
+            return len(self.cart)
+        else:
+            return f"no items in the cart"
+    def get_total_price(self):
+        total_cost = 0
+        for item in self.cart.values():
+            total_cost += item["price"]*item["quantity"]
+        if total_cost:
+            return total_cost
+        else:
+            return f"no items in the cart"
+    def __len__(self):
+        return self.get_item_count()
+    def __str__(self):
+        if not self.cart:
+            return "Your shopping cart is empty"
+        
+        lines = ["Shopping Cart:"]
+        for item_name, item_data in self.cart.items():
+            price = item_data["price"]
+            qty = item_data["quantity"]
+            total = price * qty
+            lines.append(f"  - {item_name}: {qty} × ${price:.2f} = ${total:.2f}")
+        
+        lines.append(f"\nTotal: ${self.get_total_price():.2f}")
+        return "\n".join(lines)
+    def __repr__(self):
+        return f"cart data = ({self.cart!r})"
+    def __contains__(self, item_name):
+        return item_name in self.cart
+    def __getitem__(self, item_name):
+        if item_name not in self.cart:
+            raise KeyError(f"Item '{item_name}' not in cart")
+        else:
+            return self.cart[item_name].copy()
