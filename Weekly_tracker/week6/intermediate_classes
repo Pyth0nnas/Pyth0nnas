@@ -1,0 +1,24 @@
+class Instrument:
+    def __init__(self, name: str, sound: str):
+        self.name = name
+        self.sound = sound
+    
+    def play(self) -> str:
+        return f"{self.name} makes a sound: {self.sound}"
+class StringInstrument(Instrument):
+    def __init__(self, name, sound, strings: int):
+        Instrument.__init__(self, name, sound)
+        self.strings = strings
+    def play(self):
+        return f"{self.name} with {self.strings} strings makes sound {self.sound}"
+class WindInstrument(Instrument):
+    def __init__(self, name, sound, material: str):
+        Instrument.__init__(self, name, sound)
+        self.material = material
+    def play(self):
+        return f"{self.name} made of {self.material} makes sound: {self.sound}"
+class PercussionInstrument(Instrument):
+    def __init__(self, name, sound):
+        Instrument.__init__(self, name, sound)
+    def play(self):
+        return f"{self.name} is struck and makes sound: {self.sound}"
