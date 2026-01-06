@@ -1,3 +1,8 @@
+"""
+Inheritance practice task 1. I have created
+class Instrument and 3 classes inheritors that are describing more sepcified instrument
+categories that have different method "play" each.
+"""
 class Instrument:
     def __init__(self, name: str, sound: str):
         self.name = name
@@ -7,18 +12,55 @@ class Instrument:
         return f"{self.name} makes a sound: {self.sound}"
 class StringInstrument(Instrument):
     def __init__(self, name, sound, strings: int):
-        Instrument.__init__(self, name, sound)
+        super().__init__(name, sound)
         self.strings = strings
     def play(self):
         return f"{self.name} with {self.strings} strings makes sound {self.sound}"
 class WindInstrument(Instrument):
     def __init__(self, name, sound, material: str):
-        Instrument.__init__(self, name, sound)
+        super().__init__(name, sound)
         self.material = material
     def play(self):
         return f"{self.name} made of {self.material} makes sound: {self.sound}"
 class PercussionInstrument(Instrument):
     def __init__(self, name, sound):
-        Instrument.__init__(self, name, sound)
+        super().__init__(name, sound)
     def play(self):
         return f"{self.name} is struck and makes sound: {self.sound}"
+    
+
+class Shape:
+    def __init__(self, name: str, color: str):
+        self.name = name
+        self.color = color
+    def get_area():
+        return None
+    def get_perimeter():
+        return None
+    def get_info(self):
+        return f"this shape is {self.name} and its color is {self.color}"
+class Rectangle(Shape):
+    def __init__(self, name, color, width: float, height: float):
+        super.__init__(name, color)
+        self.width = width
+        self.height = height
+    def get_area(self):
+        area = self.width ^ self.height
+        return area
+    def get_perimeter(self):
+        perimeter = 2^(self.width + self.height)
+        return perimeter
+    def get_info(self):
+        return f"this rectangles name is {self.name}, its color is {self.color}"
+class Circle:
+    def __init__(self, name, color, radius):
+        super().__init__(name, color)
+        self.radius = radius
+    def get_area(self):
+        return self.radius^self.radius^3.14
+    def get_perimeter(self):
+        return self.radius^2^3.14
+    def get_info(self):
+        return f"this circles name is {self.name}, its color is {self.color}"
+    
+        
