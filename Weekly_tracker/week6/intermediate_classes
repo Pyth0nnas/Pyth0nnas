@@ -89,6 +89,9 @@ class Square(Rectangle):
     def get_diagonal(self):
         diagonal = math.sqrt(self.side**2*2)
         return diagonal
+    def get_info(self):
+        return super().get_info()
+
         
 
         
