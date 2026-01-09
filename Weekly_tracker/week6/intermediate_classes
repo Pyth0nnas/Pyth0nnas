@@ -91,7 +91,63 @@ class Square(Rectangle):
         return diagonal
     def get_info(self):
         return super().get_info()
-
+    
+class Vehicle:
+    def __init__(self, brand: str, model: str, year: int, mileage: float):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.mileage = mileage
+    def get_info(self):
+        return f"this vehicles brand is {self.brand}, its model {self.model}, year {self.year} and mileage {self.mileage}"
+    def travel(self, distance: float):
+        self.mileage += distance
+    def get_age(self, current_year: int):
+        return current_year-self.year
+class HasGPS:
+    def __init__(self, has_gps: bool):
+        self.has_gps = has_gps
+    def get_gps_status(self):
+        if self.has_gps:
+            return f"vehicle has GPS"
+        else:
+            return f"vehicle has no GPS"
+class Electric:
+    def __init__(self, battery_capacity: float):
+        self.battery_capacity = battery_capacity
+    def get_battery_info(self):
+        return f"vehicles battery capacity is - {self.battery_capacity}"
+class HybridVehicle(HasGPS, Electric, Car):
+    def __init__(self):
+        HasGPS.__init__(self, self.has_gps)
+        Electric.__init__(self, self.battery_capacity)
+        Car.__init__(self, self.brand, self.model, self.year, self.mileage, self.wheel_count, self.doors_count)
+        engine_type = "hybrid"
+class LandVehicle(Vehicle):
+    def __init__(self, brand, model, year, mileage, wheel_count: int):
+        super().__init__(brand, model, year, mileage)
+        self.wheel_count = wheel_count
+    def get_info(self):
+        return f"{super().get_info()}, this is a land vehicle with {self.wheel_count} wheels"
+class WaterVehicle(Vehicle):
+    def __init__(self, brand, model, year, mileage, displacement: float):
+        super().__init__(brand, model, year, mileage)
+        self.displacement = displacement
+    def get_info(self):
+        return f"{super().get_info()}, this is a water vehicle displacement of {self.displacement}"
+class Car(LandVehicle):
+    def __init__(self, brand, model, year, mileage, wheel_count, doors_count: int):
+        super().__init__(brand, model, year, mileage, wheel_count)
+        self.doors_count = doors_count
+    def get_info(self):
+        return f"{super().get_info()} this is a car with {self. doors_count} doors"
+class Truck(LandVehicle):
+    def __init__(self, brand, model, year, mileage, wheel_count, max_load: float):
+        super().__init__(brand, model, year, mileage, wheel_count)
+        self.max_load = max_load
+    def get_info(self):
+        return f"{super().get_info()} this is a truck with {self.max_load} maximum load"
+    
         
 
         
