@@ -98,6 +98,8 @@ class Vehicle:
         self.model = model
         self.year = year
         self.mileage = mileage
+    def get_mileage(self):
+        return self.mileage
     def get_info(self):
         return f"this vehicles brand is {self.brand}, its model {self.model}, year {self.year} and mileage {self.mileage}"
     def travel(self, distance: float):
@@ -117,39 +119,83 @@ class Electric:
         self.battery_capacity = battery_capacity
     def get_battery_info(self):
         return f"vehicles battery capacity is - {self.battery_capacity}"
-class HybridVehicle(HasGPS, Electric, Car):
-    def __init__(self):
-        HasGPS.__init__(self, self.has_gps)
-        Electric.__init__(self, self.battery_capacity)
-        Car.__init__(self, self.brand, self.model, self.year, self.mileage, self.wheel_count, self.doors_count)
-        engine_type = "hybrid"
 class LandVehicle(Vehicle):
     def __init__(self, brand, model, year, mileage, wheel_count: int):
         super().__init__(brand, model, year, mileage)
         self.wheel_count = wheel_count
     def get_info(self):
-        return f"{super().get_info()}, this is a land vehicle with {self.wheel_count} wheels"
-class WaterVehicle(Vehicle):
-    def __init__(self, brand, model, year, mileage, displacement: float):
-        super().__init__(brand, model, year, mileage)
-        self.displacement = displacement
-    def get_info(self):
-        return f"{super().get_info()}, this is a water vehicle displacement of {self.displacement}"
+        return f"{super().get_info()}, this is also a land vehicle with {self.wheel_count} wheels"
 class Car(LandVehicle):
     def __init__(self, brand, model, year, mileage, wheel_count, doors_count: int):
         super().__init__(brand, model, year, mileage, wheel_count)
         self.doors_count = doors_count
     def get_info(self):
-        return f"{super().get_info()} this is a car with {self. doors_count} doors"
+        return f"{super().get_info()} this is also a car with {self. doors_count} doors"
+class ElectricCar(Car):
+    def __init__(self, brand, model, year, mileage, wheel_count, doors_count, charge_time: float):
+        super().__init__(brand, model, year, mileage, wheel_count, doors_count)
+        self.charge_time = charge_time
+    def get_info(self):
+        return f"{super().get_info()} this is also an electric car with {self.charge_time} minutes charging time"
 class Truck(LandVehicle):
     def __init__(self, brand, model, year, mileage, wheel_count, max_load: float):
         super().__init__(brand, model, year, mileage, wheel_count)
         self.max_load = max_load
     def get_info(self):
         return f"{super().get_info()} this is a truck with {self.max_load} maximum load"
-    
-        
+class HybridVehicle(HasGPS, Electric, Car):
+    def __init__(self):
+        HasGPS.__init__(self, self.has_gps)
+        Electric.__init__(self, self.battery_capacity)
+        Car.__init__(self, self.brand, self.model, self.year, self.mileage, self.wheel_count, self.doors_count)
+        self.engine_type = "hybrid"
 
+class WaterVehicle(Vehicle):
+    def __init__(self, brand, model, year, mileage, displacement: float):
+        super().__init__(brand, model, year, mileage)
+        self.displacement = displacement
+    def get_info(self):
+        return f"{super().get_info()}, this is a water vehicle displacement of {self.displacement}"
+class Boat(WaterVehicle):
+    def __init__(self, brand, model, year, mileage, displacement, motor_type: str):
+        super().__init__(brand, model, year, mileage, displacement)
+        self.motor_type = motor_type
+    def get_info(self):
+        return f"{super().get_info()} this is also a boat with motor type - {self.motor_type}"
+class Sailboat(Boat):
+    def __init__(self, brand, model, year, mileage, displacement, motor_type, sail_area: float):
+        super().__init__(brand, model, year, mileage, displacement, motor_type)
+        self.sail_area = sail_area
+    def get_info(self):
+        return f"{super().get_info()} this is also a sail boat with sail area of {self.sail_area}"
+class Ship(WaterVehicle):
+    def __init__(self, brand, model, year, mileage, displacement, passenger_capacity: int):
+        super().__init__(brand, model, year, mileage, displacement)    
+        self.passenger_capacity = passenger_capacity
+    def get_info(self):
+        return f"{super().get_info()} this is also a ship with {self.passenger_capacity} passenger capacity"
+class Fleet:
+    def __init__(self):
+        self.vehicles = []
+    def add_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+    def get_total_mileage(self):
+        totmile = 0
+        for vehicle in self.vehicles:
+            totmile += vehicle.get_mileage()
+        return totmile
+    def get_vehicles_by_type(self, vehicle_type):
+        return [vehicle for vehicle in self.vehicles if isinstance(vehicle, vehicle_type)]
+    def get_oldest_vehicle(self, current_year):
+        oldest = 0
+        for vehicle in self.vehicles:
+            if oldest < vehicle.get_age(current_year):
+                oldest = vehicle.get_age(current_year)
+        for vehicle in self.vehicles:
+            if oldest == vehicle.get_age(current_year):
+                return vehicle
+    def find_vehicles_with_gps(self):
+        return [vehicle for vehicle in self.vehicles if HasGPS]
         
     
         
