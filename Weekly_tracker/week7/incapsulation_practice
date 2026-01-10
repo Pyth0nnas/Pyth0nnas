@@ -1,0 +1,40 @@
+class CoffeeMachine:
+    def __init__(self):
+        self._water_level = 0
+        self._coffee_level = 0
+        self._trash_level = 0
+        self._cups_quantity = 0
+        self.water_capacity = 1000
+        self.coffee_capacity = 500
+        self.trash_bin_capacity = 300
+    def add_water(self, amount: float):
+        if amount <= 0:
+            raise ValueError("Error - incorrect amount")
+        if amount > self.water_capacity-self._water_level:
+            raise ValueError("operation cancelled - there is not enough capacity in the water tank")
+        self._water_level += amount
+        return f"succesful operation - now water level is {self._water_level}"
+    def add_coffee_beans(self, amount: float):
+        if amount <= 0:
+            raise ValueError("Error - incorrect amount")
+        if amount > self.coffee_capacity-self._coffee_level:
+            raise ValueError("operation cancelled - there is not enough capacity in the coffee beans tank")
+        self._coffee_level += amount
+        return f"succesful operation - now coffee level is {self._coffee_level}"
+    def make_coffee(self):
+        if self._water_level < 200 or self._coffee_level < 20 or self._trash_level == self.trash_bin_capacity:
+            raise ValueError("operation cancelled - there is not enough ingridients or the trash bin is full")
+        self._cups_quantity += 1
+        self._water_level -= 200
+        self._coffee_level -= 20
+        self._trash_level += 15
+        return f"operation succesful - your coffee is being prepared"
+    def clean_waste_container(self):
+        if self._trash_level == 0:
+            raise ValueError("operation cancelled - the trash bin is aleady empty")
+        self._trash_level = 0
+        return f"operation succesful - the trash bin is empty now"
+    def get_status(self):
+        return f"current water level - {self._water_level}\ncurrent coffee level - {self._coffee_level}\ncurrent trash level - {self._trash_level}\ntotal amount of coffee cups prepared - {self._cups_quantity}"
+
+        
