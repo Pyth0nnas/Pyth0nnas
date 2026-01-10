@@ -28,7 +28,12 @@ class PercussionInstrument(Instrument):
     def play(self):
         return f"{self.name} is struck and makes sound: {self.sound}"
     
+"""
+Inheritance practice task 2. I have created class shape that has 
+several inheritants describing more specified shapes and also class square
+which is Ractangles inheritant which is one of Shapes inheritants.
 
+"""
 import math
 class Shape:
     def __init__(self, name: str, color: str):
@@ -92,6 +97,11 @@ class Square(Rectangle):
     def get_info(self):
         return super().get_info()
     
+"""
+Inheritance practice task 3. I consolidated my inheritance 
+skills by practicing with more complex inheritance concepts 
+such as multiple, chain, and diamond inheritance.
+"""
 class Vehicle:
     def __init__(self, brand: str, model: str, year: int, mileage: float):
         self.brand = brand
@@ -131,9 +141,10 @@ class Car(LandVehicle):
         self.doors_count = doors_count
     def get_info(self):
         return f"{super().get_info()} this is also a car with {self. doors_count} doors"
-class ElectricCar(Car):
-    def __init__(self, brand, model, year, mileage, wheel_count, doors_count, charge_time: float):
-        super().__init__(brand, model, year, mileage, wheel_count, doors_count)
+class ElectricCar(Car,Electric):
+    def __init__(self, brand, model, year, mileage, wheel_count, doors_count, charge_time: float, battery_capacity):
+        Car.__init__(self, brand, model, year, mileage, wheel_count, doors_count)
+        Electric.__init__(self, battery_capacity)
         self.charge_time = charge_time
     def get_info(self):
         return f"{super().get_info()} this is also an electric car with {self.charge_time} minutes charging time"
@@ -144,11 +155,15 @@ class Truck(LandVehicle):
     def get_info(self):
         return f"{super().get_info()} this is a truck with {self.max_load} maximum load"
 class HybridVehicle(HasGPS, Electric, Car):
-    def __init__(self):
-        HasGPS.__init__(self, self.has_gps)
-        Electric.__init__(self, self.battery_capacity)
-        Car.__init__(self, self.brand, self.model, self.year, self.mileage, self.wheel_count, self.doors_count)
+    def __init__(self, brand, model, year, mileage, wheel_count, doors_count,
+                 has_gps, battery_capacity):
+        HasGPS.__init__(self, has_gps)
+        Electric.__init__(self, battery_capacity)
+        Car.__init__(self, brand, model, year, mileage, wheel_count, doors_count)
         self.engine_type = "hybrid"
+    def get_info(self):
+        car_info = super().get_info()
+        return f"{car_info}, engine: {self.engine_type}, {self.get_gps_status()}"
 
 class WaterVehicle(Vehicle):
     def __init__(self, brand, model, year, mileage, displacement: float):
