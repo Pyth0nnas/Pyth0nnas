@@ -37,4 +37,62 @@ class CoffeeMachine:
     def get_status(self):
         return f"current water level - {self._water_level}\ncurrent coffee level - {self._coffee_level}\ncurrent trash level - {self._trash_level}\ntotal amount of coffee cups prepared - {self._cups_quantity}"
 
-        
+class Library:
+    def __init__(self):
+        self.__books = []
+        self.__users = []
+        pass
+    
+    def add_book(self, isbn, title, author, year, is_available = True):
+        self.__books.append({"ISBN": isbn, "title": title, "author": author, "year": year})
+
+    
+    def register_user(self, user_id, name, borrowed_books = 0):
+        self.__users.append({"ID": user_id, "name": name, "borrowed_books": []})
+    
+    def borrow_book(self, user_id, isbn):
+        if user_id._validate_user() and isbn._validate_isbn():
+            if user_id in self.__users and isbn in self.__books:
+                if isbn._is_available():
+                    for user in self.__users:
+                        if user_id == user["ID"]:
+                            if len(user["borrowed_books"]) < 3:
+                                user["borrowed_books"].append(isbn)
+
+    
+    def return_book(self, user_id, isbn):
+        pass
+    
+    def get_available_books(self):
+        """Возвращает список доступных книг"""
+        pass
+    
+    def get_user_books(self, user_id):
+        """Какие книги у пользователя на руках"""
+        pass
+    
+    def get_book_history(self, isbn):
+        """История выдачи конкретной книги"""
+        pass
+    
+    def get_statistics(self):
+        """Общая статистика библиотеки"""
+        pass
+    
+    # Приватные методы для валидации
+    def _validate_isbn(self, isbn):
+        if type(isbn) == int:
+            return True
+        else:
+            False
+    
+    def _validate_user(self, user_id):
+        if type(user_id) == int:
+            return True
+        else:
+            False
+    def _is_awailable(self, isbn):
+        for user in self.__users:
+            if isbn in user["borrowed_books"]:
+                return False
+        return True
