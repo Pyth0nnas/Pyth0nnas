@@ -44,24 +44,24 @@ class Library:
         pass
     
     def add_book(self, isbn, title, author, year):
-        if isbn._validate_isbn():
+        if self._validate_isbn(isbn):
             self.__books.append({"ISBN": isbn, "title": title, "author": author, "year": year})
             return "Book has been succesfully added"
         raise TypeError("ISBN must be a number")
 
     
     def register_user(self, user_id, name):
-        if user_id._validate_user():
+        if self._validate_user(user_id):
             self.__users.append({"ID": user_id, "name": name, "borrowed_books": []})
             return "User has been succesfully added"
         return TypeError("User ID must be a number")
     
     def borrow_book(self, user_id, isbn):
-        if user_id._validate_user() and isbn._validate_isbn():
+        if self._validate_user(user_id) and self._validate_isbn(isbn):
             user_exists = any(user["ID"] == user_id for user in self.__users)
             book_exists = any(book["ISBN"] == isbn for book in self.__books)
             if user_exists and book_exists:
-                if isbn._is_available():
+                if self._is_available(isbn):
                     for user in self.__users:
                         if user_id == user["ID"]:
                             if len(user["borrowed_books"]) < 3:
@@ -73,7 +73,7 @@ class Library:
         raise TypeError("User ID and ISBN must be numbers")
 
     def return_book(self, user_id, isbn):
-        if user_id._validate_user() and isbn._validate_isbn():
+        if self._validate_user(user_id) and self._validate_isbn(isbn):
             user_exists = any(user["ID"] == user_id for user in self.__users)
             book_exists = any(book["ISBN"] == isbn for book in self.__books)
             if user_exists and book_exists:
@@ -85,7 +85,7 @@ class Library:
         raise TypeError("User ID and ISBN must be numbers")
     
     def remove_book(self, isbn):
-        if isbn._validate_isbn():
+        if self._validate_isbn(isbn):
             for i,book in enumerate(self.__books):
                 if book["ISBN"] == isbn:
                     self.__books.pop(i)
@@ -94,7 +94,7 @@ class Library:
         raise TypeError("ISBN must be a number")
     
     def remove_user(self, user_id):
-        if user_id._validate_user():
+        if self._validate_user(user_id):
             for i,user in enumerate(self.__users):
                 if user["ID"] == user_id:
                     self.__users.pop(i)
@@ -109,13 +109,13 @@ class Library:
         if type(isbn) == int:
             return True
         else:
-            False
+            return False
     
     def _validate_user(self, user_id):
         if type(user_id) == int:
             return True
         else:
-            False
+            return False
     def _is_awailable(self, isbn):
         for user in self.__users:
             if isbn in user["borrowed_books"]:
