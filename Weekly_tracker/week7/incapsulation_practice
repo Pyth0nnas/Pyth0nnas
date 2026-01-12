@@ -58,37 +58,52 @@ class Library:
     
     def borrow_book(self, user_id, isbn):
         if user_id._validate_user() and isbn._validate_isbn():
-            if user_id in self.__users[:]["ID"] and isbn in self.__books[:]["ISBN"]:
+            user_exists = any(user["ID"] == user_id for user in self.__users)
+            book_exists = any(book["ISBN"] == isbn for book in self.__books)
+            if user_exists and book_exists:
                 if isbn._is_available():
                     for user in self.__users:
                         if user_id == user["ID"]:
                             if len(user["borrowed_books"]) < 3:
                                 user["borrowed_books"].append(isbn)
                                 return "You have succesfully borrowed this book"
-                            return "book cannot be borrowed, you have reached borrowing linit"
-                return "This book is currently not awailable"
+                            return "book cannot be borrowed, you have reached borrowing limit"
+                return "This book is currently unawailable"
             raise ValueError("There is no such ISBN or user ID")
         raise TypeError("User ID and ISBN must be numbers")
 
-    
     def return_book(self, user_id, isbn):
         if user_id._validate_user() and isbn._validate_isbn():
-            if user_id in self.__users[:]["ID"] and isbn in self.__books[:]["ISBN"]:
+            user_exists = any(user["ID"] == user_id for user in self.__users)
+            book_exists = any(book["ISBN"] == isbn for book in self.__books)
+            if user_exists and book_exists:
                 for user in self.__users:
                     if isbn in user["borrowed_books"]:
                         user["borrowed_books"].remove(isbn)
+                        return "This book has been returned"
+            raise ValueError("There is no such ISBN or user ID")
+        raise TypeError("User ID and ISBN must be numbers")
     
     def remove_book(self, isbn):
-        
-        pass
+        if isbn._validate_isbn():
+            for i,book in enumerate(self.__books):
+                if book["ISBN"] == isbn:
+                    self.__books.pop(i)
+                    return "Book has been removed"
+            return ValueError("There is no such a book")
+        raise TypeError("ISBN must be a number")
     
     def remove_user(self, user_id):
-        
-        pass
+        if user_id._validate_user():
+            for i,user in enumerate(self.__users):
+                if user["ID"] == user_id:
+                    self.__users.pop(i)
+                    return "User has been removed"
+            raise ValueError("There is no such user ID") 
+        raise TypeError("User ID must be a number")
     
     def get_statistics(self):
-        
-        pass
+        return f"there is {len(self.__books)} books in the library, they are {self.__books}, also there is {len(self.__users)} users in this library, their personal information is confident"
     
     def _validate_isbn(self, isbn):
         if type(isbn) == int:
