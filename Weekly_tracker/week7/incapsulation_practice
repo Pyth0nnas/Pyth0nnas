@@ -121,3 +121,117 @@ class Library:
             if isbn in user["borrowed_books"]:
                 return False
         return True
+    
+from abc import ABC, abstractmethod
+
+class Employee(ABC):
+    def __init__(self, first_name, last_name, email, default_salary):
+        self._first_name = first_name
+        self._last_name = last_name
+        self._default_salary = default_salary
+        self._email = email
+    @property
+    def email(self):
+        if type(self.email, str):
+            return self._email
+        raise TypeError("Wrong input type")
+
+    @property
+    def default_salary(self):
+        if type(self.default_salary, int):
+            return self.default_salary
+        raise TypeError("Wrong input type")
+    
+    @property 
+    def full_name(self):
+        if type(self._first_name, str) and type(self._last_name, str):
+            return f"{self._first_name} {self._last_name}"
+        raise TypeError("Wrong input type")
+    
+    @abstractmethod
+    def calculate_salary(self):
+        pass
+
+class HourlyEmployee(Employee):
+    def __init__(self, first_name, last_name, email, default_salary, hourly_rate):
+        super().__init__(first_name, last_name, email, default_salary)
+        self._hourly_rate = hourly_rate
+        self._hours_worked = 0
+    
+    @property
+    def hourly_rate(self):
+        if type(self._hourly_rate, int):
+            return self._hourly_rate
+        elif type(self._hourly_rate, str):
+            return int(self._hourly_rate)
+        raise TypeError("Wrong input type")
+    
+    @hourly_rate.setter
+    def hourly_rate(self, value):
+        if type(value, int):
+            if value > 0:
+                self._hourly_rate = value
+    
+    @property
+    def hours_worked(self):
+        if type(self._hours_worked, int):
+            return self._hours_worked
+        elif type(self._hours_worked, str):
+            return int(self._hours_worked)
+        raise TypeError("Wrong input type")
+    
+    @hours_worked.setter
+    def hours_worked(self, value):
+        if type(value, int):
+            if value > 0:
+                self._hours_worked = value
+    
+    def calculate_salary(self):
+        if self._hours_worked <= 40:
+            return self._hours_worked*self._hourly_rate
+        else:
+            return self._hourly_rate*40+self._hourly_rate*1.5*(self._hours_worked-40)
+        
+class SalariedEmployee(Employee):
+    def __init__(self, first_name, last_name, email, default_salary, experience):
+        super().__init__(first_name, last_name, email, default_salary)
+        self._experience = experience
+    @property
+    def experience(self):
+        if type(self._experience, int):
+            return self._experience
+        raise TypeError("Wrong input type")
+    
+    @experience.setter
+    def experience(self, value):
+        if type(value, int):
+            if value >= 0:
+                self._experience = value
+
+    def calculate_salary(self):
+        if self._experience == 0:
+            return self._default_salary
+        if self._experience < 20:
+            return self._default_salary+(self._default_salary*self._experience/100)
+        if self._experience >= 20:
+            return self._default_salary+(self._default_salary/5)
+
+class ComissionEmployee(SalariedEmployee):
+    def __init__(self, first_name, last_name, email, default_salary, experience, sells):
+        super().__init__(first_name, last_name, email, default_salary, experience)
+        self._sells = sells
+    
+    @property
+    def sells(self):
+        if type(self._sells, int):
+            return self._experience
+        raise TypeError("Wrong input type")
+    
+    @sells.setter
+    def sells(self, value):
+        if type(value, int):
+            if value >= 0:
+                self._sells = value
+
+    def calculate_salary(self):
+        return super().calculate_salary()+(self.sells*5/100)
