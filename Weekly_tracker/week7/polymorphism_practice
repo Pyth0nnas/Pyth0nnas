@@ -1,0 +1,60 @@
+from abc import ABC, abstractmethod
+class MediaItem(ABC):
+    def __init__(self, title: str, author: str, file_size_mb: float):
+        self.title = title
+        self.author = author
+        self.file_size_mb = file_size_mb
+    @abstractmethod
+    def play(self):
+        pass
+    @abstractmethod
+    def get_details(self):
+        pass
+    def get_basic_info(self):
+        return f"Title - {self.title}, Author - {self.author}"
+    
+class AudioFile(MediaItem):
+    def __init__(self, title, author, file_size_mb, duration_minutes: int, bitrate_kbps):
+        super().__init__(title, author, file_size_mb)
+        self.duration_minutes = duration_minutes
+        self.bitrate_kbps = bitrate_kbps
+    def play(self):
+        return f"🎵 Playing audio: [{self.title}] ({self.duration_minutes} min, {self.bitrate_kbps} kbps)"
+    def get_details(self):
+        return f"This audio file's title is {self.title}\nIts author is {self.author}\nAudio file lasts {self.duration_minutes} minutes\nIt has a bitrate of {self.bitrate_kbps} kbps"
+class VideoFile(MediaItem):
+    def __init__(self, title, author, file_size_mb, duration_minutes: int, resolution: str):
+        super().__init__(title, author, file_size_mb)
+        self.duration_minutes = duration_minutes
+        self.resolution = resolution
+    def play(self):
+        return f"🎬 Playing video: {self.title} ({self.resolution} fps, {self.duration_minutes} min)"
+    def get_details(self):
+        return f"This video file's title is {self.title}\nIts author is {self.author}\nVideo file lasts {self.duration_minutes} minutes\nIt has a resolution of {self.resolution} fps"
+class Ebook(MediaItem):
+    def __init__(self, title, author, file_size_mb, page_count: int, format: str):
+        super().__init__(title, author, file_size_mb)
+        self.page_count = page_count
+        self.format = format
+    def play(self):
+        return f"📖 Opening ebook: [{self.title}] ({self.page_count} pages)"
+    def get_details(self):
+        return f"This ebook's title is {self.title}\nIts author is {self.author}\nEbook has {self.page_count} pages\nIt is in a format {self.format}"
+class MediaLibrary:
+    def __init__(self, media_items: list):
+        self.media_items = media_items
+    def browse_library(self):
+        for item in self.media_items:
+            print (item.get_basic_info())
+    def play_all(self):
+        for item in self.media_items:
+            print (item.play())
+    def find_by_author(self, author: str):
+        for item in self.media_items:
+            if item.author == author:
+                print (item.get_details())
+    def total_storage_required(self):
+        tot = 0
+        for item in self.media_items:
+            tot += item.file_size_mb
+        return tot
