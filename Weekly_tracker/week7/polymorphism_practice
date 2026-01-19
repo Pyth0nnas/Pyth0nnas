@@ -58,3 +58,119 @@ class MediaLibrary:
         for item in self.media_items:
             tot += item.file_size_mb
         return tot
+    
+from abc import ABC, abstractmethod
+class SmartDevice(ABC):
+    def __init__(self, device_id: str, name: str, is_on: bool = False):
+        self.device_id = device_id
+        self.name = name
+        self.is_on = is_on
+    @abstractmethod
+    def get_status(self):
+        pass
+    @abstractmethod
+    def execute_command(self, command: str):
+        pass
+    def toggle(self):
+        if self.is_on:
+            self.is_on = False
+            return f"device {self.name} has been switched off"
+        else:
+            self.is_on = True
+            return f"device {self.name} has been switched on"
+    def get_info(self):
+        if self.is_on:
+            return f"This device is a {self.name}, id - {self.device_id}\nDevice is switched on"
+        else:
+            return f"This device is a {self.name}, id - {self.device_id}\nDevice is switched off"
+class SmartLight(SmartDevice):
+    def __init__(self, device_id, name, is_on, brightness: int, color: str):
+        super().__init__(device_id, name, is_on)
+        self.brightness = brightness
+        self.color = color
+    def execute_command(self, command):
+        if command == "brightness 50":
+            self.brightness = 50
+            return "brightness - 50"
+        elif command == "color warm":
+            self.color = "warm"
+            return "light's color - warm"
+        else:
+            return "Unknown command"
+    def get_status(self):
+        if self.is_on:
+            return f"Light is ON, brightness: {self.brightness}, color: {self.color}" 
+        else:
+            return "Light is OFF"
+class SmartThermostat(SmartDevice):
+    def __init__(self, device_id, name, is_on, current_temp: float, target_temp: float, mode: str):
+        super().__init__(device_id, name, is_on)
+        self.current_temp = current_temp
+        self.target_temp = target_temp
+        self.mode = mode
+    def execute_command(self, command):
+        if command == "temp 22.5":
+            self.target_temp = 22.5
+            return "target temperature - 22.5"
+        elif command == "mode heat":
+            self.mode = "heat"
+            return "mode - heat"
+        else:
+            return "Unknown command"
+    def get_status(self):
+        if self.is_on:
+            return f"Thermostat: {self.current_temp}°C → {self.target_temp}°C ({self.mode} mode)"
+        else:
+            return "Thermostat is OFF"
+class SmartLock(SmartDevice):
+    def __init__(self, device_id, name, is_on, is_locked: bool, access_code: str):
+        super().__init__(device_id, name, is_on)
+        self.is_locked = is_locked
+        self.access_code = access_code
+    def execute_command(self, command):
+        if command == "lock":
+            self.is_locked = True
+            return "Lock is locked"
+        elif command == "unlock":
+            self.is_locked = False
+            return "Lock is unlocked"
+        elif command == "code 1234":
+            self.access_code = "1234"
+            return "Access code has been changed"
+        else:
+            return "Unknown command"
+    def get_status(self):
+        if self.is_on:
+            if self.is_locked:
+                return "Lock is LOCKED"
+            else:
+                return "Lock is UNLOCKED"
+        else:
+            return "Lock is OFF" 
+class SmartHome:
+    def __init__(self):
+        self.devices = []
+    def add_device(self, device: SmartDevice):
+        self.devices.append(device)
+    def get_all_status(self):
+        for device in self.devices:
+            print (device.get_status())
+        pass
+    def execute_on_all(self, command: str):
+        print(f"Executing '{command}' on all devices:")
+        for device in self.devices:
+            result = device.execute_command(command)
+            print(f"  {device.name}: {result}")
+        pass
+    def find_device(self, device_id: str):
+        for device in self.devices:
+            if device.device_id == device_id:
+                print (device.get_info())
+        pass
+    def total_devices_on(self):
+        count = 0
+        for device in self.devices:
+            if device.is_on:
+                count += 1
+        print (count)
+        pass
