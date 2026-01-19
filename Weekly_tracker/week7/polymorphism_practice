@@ -174,3 +174,56 @@ class SmartHome:
                 count += 1
         print (count)
         pass
+
+from abc import ABC, abstractmethod
+class NotificationChannel(ABC):
+    def __init__(self, channel_name: str):
+        self.channel_name =channel_name
+    @abstractmethod
+    def send(self, recipient: str, message: str):
+        pass
+    @abstractmethod
+    def format_message(self, message: str):
+        pass
+    def get_channel_info(self):
+        return f"Channel name - {self.channel_name}"
+class EmailChannel(NotificationChannel):
+    def __init__(self, channel_name, sender_email: str):
+        super().__init__(channel_name)
+        self.sender_email = sender_email
+    def format_message(self, message):
+        formatted_message = message + " Sent via Email"
+        return formatted_message
+    def send(self, recipient, message):
+        return f"📧 Email sent to {recipient} from {self.sender_email}: {self.format_message(message)}"
+    def get_channel_info(self):
+        return super().get_channel_info()
+class SMSChannel(NotificationChannel):
+    def __init__(self, channel_name, sender_number: str):
+        super().__init__(channel_name)
+        self.sender_number = sender_number
+    def format_message(self, message):
+        if len(message) <= 154:
+            formatted_message = message + " [SMS]"
+            return formatted_message
+        else:
+            formatted_message = message[:154] + " [SMS]"
+            return formatted_message
+    def send(self, recipient, message):
+        return f"📱 SMS sent to {recipient}: {self.format_message(message)}"
+    def get_channel_info(self):
+        return super().get_channel_info()
+class PushNotificationChannel(NotificationChannel):
+    def __init__(self, channel_name, app_name: str):
+        super().__init__(channel_name)
+        self.app_name = app_name
+    def format_message(self, message):
+        if len(message) <= 95:
+            formatted_message = "🔔 " + message + "..."
+            return formatted_message
+        else:
+            formatted_message = "🔔 " + message[:95] + "..."
+            return formatted_message
+    def send(self, recipient, message):
+        return f"🔔 Push notification to {recipient} via {self.app_name}: {self.format_message(message)}"
+        
