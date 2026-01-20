@@ -1,3 +1,8 @@
+"""
+Polymorphism practice task 1, class media item has some attributes 
+and two abstract methods that are used in its inheritants, and theres 
+is class media library having an array of media items and a few simple methods.
+"""
 from abc import ABC, abstractmethod
 class MediaItem(ABC):
     def __init__(self, title: str, author: str, file_size_mb: float):
@@ -58,7 +63,12 @@ class MediaLibrary:
         for item in self.media_items:
             tot += item.file_size_mb
         return tot
-    
+"""
+Polymorphism practice task 2, class smart device and his inheritants
+representing differend types of smart devices that has a differend implementation
+of two abstract methods each. And a class smart home that is working with an array 
+of different smart devices.
+"""
 from abc import ABC, abstractmethod
 class SmartDevice(ABC):
     def __init__(self, device_id: str, name: str, is_on: bool = False):
@@ -170,7 +180,11 @@ class SmartHome:
             if device.is_on:
                 count += 1
         print (count)
-
+"""
+Polymorphism practice task 3, a class representing notification channel 
+has two abstract methods which is used in other classes-inheritants representing different
+notification channel each.
+"""
 from abc import ABC, abstractmethod
 class NotificationChannel(ABC):
     def __init__(self, channel_name: str):
