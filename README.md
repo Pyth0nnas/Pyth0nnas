@@ -2,7 +2,7 @@
 My name is Thomas and im trying to get better at programming on python in order to become a ML specialist one day.
 ## Some more info about me
 - I wont start learning python from 0 because i had some practice coding in highschool so at first i will just remembering stuff i knew and soon will start making projects and solve complicated tasks(i hope).
-- I have given myself 6 month, during which i will try my best to code every day and hopefully at the end of this period i will achieve my goal of becoming a high skilled Data Analyst.
+- I have given myself 6 month, during which i will try my best to code every day and hopefully at the end of this period i will achieve my goal of becoming coder.
 - I will be learning mostly by myself using google, youtube and AI.
 - Im from Israel
 - Im 22
