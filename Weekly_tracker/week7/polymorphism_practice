@@ -155,36 +155,40 @@ class SmartHome:
     def get_all_status(self):
         for device in self.devices:
             print (device.get_status())
-        pass
     def execute_on_all(self, command: str):
         print(f"Executing '{command}' on all devices:")
         for device in self.devices:
             result = device.execute_command(command)
             print(f"  {device.name}: {result}")
-        pass
     def find_device(self, device_id: str):
         for device in self.devices:
             if device.device_id == device_id:
                 print (device.get_info())
-        pass
     def total_devices_on(self):
         count = 0
         for device in self.devices:
             if device.is_on:
                 count += 1
         print (count)
-        pass
 
 from abc import ABC, abstractmethod
 class NotificationChannel(ABC):
     def __init__(self, channel_name: str):
-        self.channel_name =channel_name
+        self.channel_name = channel_name
     @abstractmethod
     def send(self, recipient: str, message: str):
         pass
     @abstractmethod
     def format_message(self, message: str):
         pass
+    def message_validator(self, message):
+        if type(message) == str:
+            return True
+        return False
+    def recipient_validator(self, recipient):
+        if type(recipient) == str:
+            return True
+        return False
     def get_channel_info(self):
         return f"Channel name - {self.channel_name}"
 class EmailChannel(NotificationChannel):
@@ -192,38 +196,78 @@ class EmailChannel(NotificationChannel):
         super().__init__(channel_name)
         self.sender_email = sender_email
     def format_message(self, message):
-        formatted_message = message + " Sent via Email"
-        return formatted_message
+        if self.message_validator(message):
+            formatted_message = message + " Sent via Email"
+            return formatted_message
+        return "wrong input"
     def send(self, recipient, message):
-        return f"📧 Email sent to {recipient} from {self.sender_email}: {self.format_message(message)}"
+        if self.message_validator(message) and self.recipient_validator(recipient):
+            return f"📧 Email sent to {recipient} from {self.sender_email}: {self.format_message(message)}"
+        return "wrong input"
     def get_channel_info(self):
-        return super().get_channel_info()
+        info = super().get_channel_info()
+        return f"This is an email channel, {info}, sender's email - {self.sender_email}"
 class SMSChannel(NotificationChannel):
     def __init__(self, channel_name, sender_number: str):
         super().__init__(channel_name)
         self.sender_number = sender_number
     def format_message(self, message):
-        if len(message) <= 154:
-            formatted_message = message + " [SMS]"
+        if self.message_validator(message):
+            if len(message) <= 154:
+                formatted_message = message + " [SMS]"
+                return formatted_message
+            else:
+                formatted_message = message[:154] + " [SMS]"
             return formatted_message
-        else:
-            formatted_message = message[:154] + " [SMS]"
-            return formatted_message
+        return "wrong input"
     def send(self, recipient, message):
-        return f"📱 SMS sent to {recipient}: {self.format_message(message)}"
+        if self.message_validator(message) and self.recipient_validator(recipient):
+            return f"📱 SMS sent to {recipient}: {self.format_message(message)}"
+        return "wrong input"
     def get_channel_info(self):
-        return super().get_channel_info()
+        info = super().get_channel_info()
+        return f"This is an SMS channel, {info}, sender's phone number - {self.sender_number}"
 class PushNotificationChannel(NotificationChannel):
     def __init__(self, channel_name, app_name: str):
         super().__init__(channel_name)
         self.app_name = app_name
     def format_message(self, message):
-        if len(message) <= 95:
-            formatted_message = "🔔 " + message + "..."
-            return formatted_message
-        else:
-            formatted_message = "🔔 " + message[:95] + "..."
-            return formatted_message
+        if self.message_validator(message):
+            if len(message) <= 95:
+                formatted_message = "🔔 " + message + "..."
+                return formatted_message
+            else:
+                formatted_message = "🔔 " + message[:95] + "..."
+                return formatted_message
+        return "wrong input" 
     def send(self, recipient, message):
-        return f"🔔 Push notification to {recipient} via {self.app_name}: {self.format_message(message)}"
-        
+        if self.message_validator(message) and self.recipient_validator(recipient):
+            return f"🔔 Push notification to {recipient} via {self.app_name}: {self.format_message(message)}"
+        return "wrong input"
+    def get_channel_info(self):
+        info = super().get_channel_info()
+        return f"This is a push notification channel, {info}, application name - {self.app_name}"
+class NotificationService:
+    def __init__(self):
+        self.channels = []
+    def add_channel(self, channel: NotificationChannel):
+        self.channels.append(channel)
+    def send_to_all(self, recipient: str, message: str):
+        for channel in self.channels:
+            result = channel.send(recipient, message)
+            print(f"{channel.channel_name} - {result}")
+    def send_by_channel(self, channel_name: str, recipient: str, message: str):
+        for channel in self.channels:
+            if channel.channel_name == channel_name:
+                print ("successfully executed")
+                print (channel.send(recipient, message))
+                return
+        print (f"channel - {channel_name} hasn't been found")
+    def list_channels(self):
+        all_info = []
+        for channel in self.channels:
+            all_info.append(channel.get_channel_info())
+        if len(all_info) > 0:
+            print (all_info)
+            return
+        print ("channels list is empty")
