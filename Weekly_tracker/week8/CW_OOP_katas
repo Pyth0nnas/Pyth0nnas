@@ -36,3 +36,24 @@ def most_money(students):   # 6kyu kata - "Who has the most money?"
         money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20
         if money == mostmoney:
             return students[i].name
+        
+class Lamp:    # 6kyu kata - "The Lamp: Revisited"
+    def __init__(self, color: str, on: bool = False):
+        self.color = color
+        self.on = on
+    def on(self):
+        if self.on:
+            return True
+        if not self.on:
+            return False
+    def color(self):
+        return self.color
+    def toggle_switch(self):
+        if self.on:
+            self.on = False
+        else:
+            self.on = True
+    def state(self):
+        if self.on:
+            return "The lamp is on."
+        return "The lamp is off."
