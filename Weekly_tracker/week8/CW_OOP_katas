@@ -1,4 +1,4 @@
-class Cipher:   # 6kyu kata - Simple Substitution Cipher Helper
+class Cipher:   # 6kyu kata - "Simple Substitution Cipher Helper"
     def __init__(self, map1, map2):
         self.map1 = map1
         self.map2 = map2
@@ -10,7 +10,6 @@ class Cipher:   # 6kyu kata - Simple Substitution Cipher Helper
             else:
                 encoded += element
         return encoded
-
     def decode(self, string):
         decoded = ""
         for element in string:
@@ -20,3 +19,20 @@ class Cipher:   # 6kyu kata - Simple Substitution Cipher Helper
                 decoded += element
         return decoded
     
+def most_money(students):   # 6kyu kata - "Who has the most money?"
+    equality = 1
+    mostmoney = 0
+    if len(students) == 1:
+        return students[0].name
+    for i in range(len(students)):
+        money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20
+        if money == mostmoney:
+            equality += 1
+        if money > mostmoney:
+            mostmoney = money
+    if equality >= len(students):
+        return "all"
+    for i in range(len(students)):
+        money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20
+        if money == mostmoney:
+            return students[i].name
