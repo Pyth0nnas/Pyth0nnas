@@ -57,3 +57,55 @@ class Lamp:    # 6kyu kata - "The Lamp: Revisited"
         if self.on:
             return "The lamp is on."
         return "The lamp is off."
+    
+class Harshad:   # 6kyu kata - "Harshad or Niven numbers"
+    @staticmethod
+    def is_valid(number):
+        digsum = 0
+        for dig in str(number):
+            digsum += int(dig)
+        if number % digsum == 0:
+            return True
+        return False
+    @staticmethod
+    def get_next(number):
+        next = number + 1
+        while not Harshad.is_valid(next):
+            next += 1
+        return next
+    @staticmethod
+    def get_series(count, start=0):
+        nextseries = [start]
+        counter = 0
+        while count + 1 != len(nextseries):
+            nextseries.append(Harshad.get_next(nextseries[counter]))
+            counter += 1
+        return nextseries[1:]
+    
+class SmartTrafficLight:   # 6kyu kata - "Smart Traffic Lights"
+    def __init__(self, st1, st2):
+        self.st1 = st1
+        self.st2 = st2
+        
+    def turngreen(self):
+        if self.st1[0] > self.st2[0]:
+            self.st1[0] = 0
+            return self.st1[1]
+        elif self.st1[0] < self.st2[0]:
+            self.st2[0] = 0
+            return self.st2[1]
+        else:
+            return None
+        
+class HighScoreTable:   # 6kyu kata - "High score table"
+    
+    def __init__(self, length):
+        self.scores = []
+        self.length = length
+    def update(self, score):
+        self.scores.append(score)
+        self.scores = sorted(self.scores, reverse = True)
+        if len(self.scores) > self.length:
+            self.scores = self.scores[:self.length]
+    def reset(self):
+        self.scores.clear()
