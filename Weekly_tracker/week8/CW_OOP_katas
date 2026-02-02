@@ -6,7 +6,7 @@ class Cipher:   # 6kyu kata - "Simple Substitution Cipher Helper"
         encoded = ""
         for element in string:
             if element in self.map1:
-                encoded += self.map2[self.map1.index(element)]
+                encoded += self.map2[self.map1.index(element)]   # adding to the result the letter from the same position in map2 
             else:
                 encoded += element
         return encoded
@@ -14,7 +14,7 @@ class Cipher:   # 6kyu kata - "Simple Substitution Cipher Helper"
         decoded = ""
         for element in string:
             if element in self.map2:
-                decoded += self.map1[self.map2.index(element)]
+                decoded += self.map1[self.map2.index(element)]   # same thing as before but switching between map1 and map2
             else:
                 decoded += element
         return decoded
@@ -25,42 +25,42 @@ def most_money(students):   # 6kyu kata - "Who has the most money?"
     if len(students) == 1:
         return students[0].name
     for i in range(len(students)):
-        money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20
-        if money == mostmoney:
-            equality += 1
+        money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20   # counting the total amount for each student
+        if money == mostmoney: 
+            equality += 1   # if the two students have the same amount get 1 equality point
         if money > mostmoney:
-            mostmoney = money
-    if equality >= len(students):
+            mostmoney = money   # getting the biggest amount
+    if equality >= len(students):    # if there is same amount of equality points as the students that means each has the same amount of money 
         return "all"
     for i in range(len(students)):
         money = students[i].fives * 5 + students[i].tens * 10 + students[i].twenties * 20
-        if money == mostmoney:
+        if money == mostmoney:   # finding the student with the biggest amount of money
             return students[i].name
         
 class Lamp:    # 6kyu kata - "The Lamp: Revisited"
     def __init__(self, color: str, on: bool = False):
         self.color = color
         self.on = on
-    def on(self):
+    def on(self):    # simple check
         if self.on:
             return True
         if not self.on:
             return False
-    def color(self):
+    def color(self):   # simple getter
         return self.color
     def toggle_switch(self):
         if self.on:
             self.on = False
         else:
             self.on = True
-    def state(self):
+    def state(self):    # simple "__str__"
         if self.on:
             return "The lamp is on."
         return "The lamp is off."
     
 class Harshad:   # 6kyu kata - "Harshad or Niven numbers"
     @staticmethod
-    def is_valid(number):
+    def is_valid(number):   # checking if the number meets the requerments to be "Harshad"
         digsum = 0
         for dig in str(number):
             digsum += int(dig)
@@ -68,13 +68,13 @@ class Harshad:   # 6kyu kata - "Harshad or Niven numbers"
             return True
         return False
     @staticmethod
-    def get_next(number):
+    def get_next(number):    # finding the next "harshad" number starting from "number"
         next = number + 1
         while not Harshad.is_valid(next):
             next += 1
         return next
     @staticmethod
-    def get_series(count, start=0):
+    def get_series(count, start=0):   # getting the needed amount of "Harshad numbers" after "number"
         nextseries = [start]
         counter = 0
         while count + 1 != len(nextseries):
@@ -87,7 +87,7 @@ class SmartTrafficLight:   # 6kyu kata - "Smart Traffic Lights"
         self.st1 = st1
         self.st2 = st2
         
-    def turngreen(self):
+    def turngreen(self):   # simple...
         if self.st1[0] > self.st2[0]:
             self.st1[0] = 0
             return self.st1[1]
@@ -104,8 +104,8 @@ class HighScoreTable:   # 6kyu kata - "High score table"
         self.length = length
     def update(self, score):
         self.scores.append(score)
-        self.scores = sorted(self.scores, reverse = True)
+        self.scores = sorted(self.scores, reverse = True)   # sorting the leaderboard after every new score
         if len(self.scores) > self.length:
-            self.scores = self.scores[:self.length]
-    def reset(self):
+            self.scores = self.scores[:self.length]   # cutting the scores that beyond the leaderboard len
+    def reset(self):   # reset...
         self.scores.clear()
