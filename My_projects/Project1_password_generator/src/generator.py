@@ -19,6 +19,11 @@ class PasswordGenerator:
             return password
         else:
             return "Password is too short"
+    def generate_code_word(self, length = 6):
+        if length < 1:
+            raise ValueError("Code word is too short")
+        code_word = ''.join(random.choice(string.ascii_uppercase  + string.ascii_lowercase) for _ in range(length))
+        return code_word
     def generate_pin(self, length = 4):
         if length < 1:
             raise ValueError("PIN is too short")
