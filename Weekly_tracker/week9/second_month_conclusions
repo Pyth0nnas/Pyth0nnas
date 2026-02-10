@@ -1,1 +1,14 @@
-
+"""
+Another month of my studies has passed, and I'd like to summarize its results: 
+Of the two main tasks for this month (exploring OOP and completing my own projects), 
+I believe I only fully accomplished one - mastering OOP. I got too carried away with this topic and didn't 
+leave myself enough time for projects, as a result of that I only managed to complete one, and even then, 
+I was a few days late. I hope to complete another project next week. 
+The main problem I encountered at the end of this month, which is why the plan for the last week 
+actually stretched out to two weeks, was uncertainity about the direction of further learning. At first, 
+I chose machine learning, then, analyzing the IT market in Israel, I decided that data analysis would 
+suit me better. At the time of writing this report, I'm leaning toward QA automated testing. 
+While I was learning the basics of programming, I could afford such hesitations, although it 
+negatively affected my motivation at the moment. But by the end of next week, 
+I hope to finally decide which direction to move in and be able to begin more specialized training.
+"""
