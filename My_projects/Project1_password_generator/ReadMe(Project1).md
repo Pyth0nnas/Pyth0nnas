@@ -1,6 +1,6 @@
-# This is a sipmle but effective password generator and analyzer.
+# This is a simple but effective password generator and analyzer.
 
-# Its capability:
+# Its capabilities:
 - Generate secure passwords with customizable lengths.
 - Create PINs for two-factor authentication.
 - Generate passwords using only letters.
@@ -12,3 +12,6 @@ git clone https://github.com/Pyth0nnas/Project1_password_generator.git
 
 # To the folder
 cd Project1_password_generator
+
+# To run demo:
+python main.py
