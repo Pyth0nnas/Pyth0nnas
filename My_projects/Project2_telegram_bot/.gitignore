@@ -1,0 +1,39 @@
+venv/
+env/
+.env
+ENV/
+env.bak/
+venv.bak/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+dist/
+build/
+*.egg-info/
+
+# logs
+*.log
+*.log.*
+
+# sys files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
