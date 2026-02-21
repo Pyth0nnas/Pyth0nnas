@@ -3,6 +3,7 @@ My name is Thomas and im trying to get better at programming on python in order 
 ## Some more info about me
 - I wont start learning python from 0 because i had some practice coding in highschool so at first i will just remembering stuff i knew and soon will start making projects and solve complicated tasks(i hope).
 - I have given myself 6 month, during which i will try my best to code every day and hopefully at the end of this period i will achieve my goal of becoming coder.
+- At the moment(after 2 month of studying from python basics right up to 6kyu), I will be studying in depth the tools related to automated QA in order to subsequently apply for a position in this field.
 - I will be learning mostly by myself using google, youtube and AI.
 - Im from Israel
 - Im 22
