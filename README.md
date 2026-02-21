@@ -8,7 +8,7 @@ My name is Thomas and im trying to get better at programming on python in order 
 - Im 22
 ## More info about my journey
 - I will be updating my progress and reporting concepts that im learning, projects im working on and some solutions for tasks in codewars.
-- Will be trying to spend about 20 hours coding weekly and make something like progress journal where i will be capturing my weekly improvements more detally.
+- Will be trying to spend about 15-20 hours coding weekly and make something like progress journal where i will be capturing my weekly improvements more detally.
 ## Here i will add some links
 [![Codewars](https://img.shields.io/badge/Codewars-B1361E?style=for-the-badge&logo=codewars&logoColor=white)](https://www.codewars.com/users/Tommyjunbas)
 ![Codewars Stats](https://github.r2v.ch/codewars?user=Tommyjunbas&stroke=%23BB432C&stroke-width=4)
